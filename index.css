@@ -1,0 +1,173 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+body {
+  background: #f4f6f9;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background: #2d3e50;
+  color: white;
+  padding: 15px;
+}
+
+.download-btn {
+  background: green;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+/* Layout */
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background: white;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
+  background: #007bff;
+  color: white;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.section {
+  display: none;
+  /* background: white; */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.active-section {
+  display: block;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr ;
+  gap: 10px;
+}
+#contactform {
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    gap: 10px;
+}
+#contactform input, #contactform textarea {
+  padding: 10px;
+    border: 1px solid #55c3b9;
+    width: 30%;
+    border-radius: 30px;
+}
+.feild {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.btnflex{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+button{
+    
+    padding: 10px 30px;
+    border-radius: 30px;
+    color: white;
+    background-color: #0aa1ad;
+}
+
+.summaryform{
+Display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.feild {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+}
+
+form {
+      display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    
+    padding: 20px 30px;
+}
+
+input,textarea,select{
+        padding: 10px;
+    border: 1px solid #55c3b9;
+    border-radius: 10px;
+    background-color: #f4f6f9;
+}
+
+.feild-full {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+button#addmoreexp ,button#addmoredu ,button#addmoreHonors ,button#addmoreSkills{
+    margin-top: 20px;
+    border: 1px dashed;
+    width: 100%;
+    display: flex;
+    border-radius: 10px;
+    background-color: #f0efef;
+    /* opacity: 0.5; */
+    color: #000000;
+}
+
+.formHeader {
+    display: flex;
+    justify-content: space-between;
+    
+    padding: 20px 30px;
+}
+
+.formcontainer{
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+form.form-body {
+   
+    border-top: 1px solid #bcbcbc;
+}
+

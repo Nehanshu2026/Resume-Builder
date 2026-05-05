@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Builder</title>
+  <link rel="stylesheet" href="index.css">
+<style>
+    /* ===== RESUME BOX ===== */
+.resume-box {
+  width: 750px;
+  background: #f4f1ea;
+  padding: 35px;
+  border-radius: 10px;
+}
+
+/* HEADER */
+.res-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #aaa;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.res-header h1 {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.role {
+  font-size: 13px;
+  color: #555;
+}
+
+.contact {
+  font-size: 12px;
+  text-align: right;
+}
+
+/* SECTION */
+.res-section {
+  margin-bottom: 20px;
+}
+
+.res-section h3 {
+  font-size: 13px;
+  border-bottom: 1px solid #999;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+}
+
+/* ITEMS */
+.res-item {
+  margin-bottom: 12px;
+}
+
+.res-flex {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.sub {
+  font-size: 12px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+/* LIST */
+.res-item ul {
+  padding-left: 18px;
+  font-size: 12px;
+}
+
+.edu-desc {
+  font-size: 12px;
+  color: #444;
+}
+
+/* SKILLS */
+.skills-grid {
+  display: flex;
+  gap: 40px;
+}
+
+.skills-grid ul {
+  font-size: 12px;
+  padding-left: 18px;
+}
+
+#r_skills {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-block {
+  font-size: 13px;
+}
+
+.skill-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.skill-title span {
+  font-weight: normal;
+  color: #666;
+  font-size: 12px;
+}
+
+.skill-block ul {
+  padding-left: 18px;
+}
+
+/* ===== MODAL BACKGROUND ===== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* dark blur effect */
+  
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal.active {
+  display: flex;
+}
+
+/* ===== MODAL BOX ===== */
+.modal-content {
+  position: relative;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* honors */
+.honor-item {
+  margin-bottom: 14px;
+}
+
+.honor-flex {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.honor-title {
+  font-weight: bold;
+}
+
+.honor-year {
+  font-size: 12px;
+  color: #555;
+}
+
+.honor-org {
+  font-size: 12px;
+  color: #444;
+  margin-top: 2px;
+}
+
+.honor-desc {
+  font-size: 12px;
+  color: #555;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+</style>
+
+</head>
+<body>
+<div id="resumeModal" class="modal">
+  <div class="modal-content">
+
+    <button id="closeResume" class="close-btn">✕</button>
+    <div class="resume-box">
+
+        <!-- HEADER -->
+        <div class="res-header">
+          <div>
+            <h1 id="name">SEBASTIAN BENNETT</h1>
+            <p class="role" id="r_role"></p>
+          </div>
+
+          <div class="contact">
+            <p> <span>📞</span> <span id="r-phone"></span></p>
+            <p><span>✉️</span> <span id="r-email"></span></p>
+            <p><span>📍</span> <span id="r-address"></span></p>
+            <p>  <span></span> <span id="r-linkedin"></span></p>
+            <p><span></span> <span id="r-github"></span></p>
+
+          </div>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="res-section">
+          <h3>SUMMARY</h3>
+          <p id ="r_summary">
+          </p>
+        </div>
+
+        <!-- EXPERIENCE -->
+        <div class="res-section">
+          <h3>EXPERIENCE</h3>
+
+          <div id="r_experience-list">
+            
+          </div>
+
+
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="res-section">
+          <h3>EDUCATION HISTORY</h3>
+          <div id="r_education_list">
+            
+          </div>
+
+
+
+        </div>
+
+        <!-- SKILLS -->
+      <div class="res-section">
+        <h3>SKILLS</h3>
+
+        <div id="r_skills">
+        </div>
+      </div>
+
+      <!-- honors -->
+
+      <div class="res-section">
+        <h3>HONORS & AWARDS</h3>
+
+        <div id="r_honor">
+
+
+
+        </div>
+
+
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="navbar">
+  <h2>Resume Builder</h2>
+  <button class="download-btn">view Resume</button>
+</div>
+
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <ul>
+      <li class="active" onclick="showSection('contact', this)">Contact</li>
+      <li onclick="showSection('summary', this)">Summary</li>
+      <li onclick="showSection('experience', this)">Experience</li>
+      <li onclick="showSection('education', this)">Education</li>
+      <li onclick="showSection('honors', this)">Honors</li>
+      <li onclick="showSection('skills', this)">Skills</li>
+    </ul>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <div id="contact" class="section active-section">
+      <h2>Contact Information</h2>
+      <div class="form-grid">
+        <form id="contactform">
+            <input type="text" placeholder="First Name" id="firstname">
+            <input type="text" placeholder="Last Name" id="lastname">
+            <input type="email" placeholder="Email" id="email">
+            <input type="tel" placeholder="Enter Phone Number" id="phonenumber">
+            <input type="url" placeholder="Website / Portfolio" id ="portfolio">
+            <input type="url" placeholder="linkedin" id="linkedin">
+            <input type="url" placeholder="github" id="github">
+            <input type="text" placeholder="address" id="address">
+            <input type="text" placeholder="Nationality" id="nationality">
+            <input type="date" placeholder="Date of Birth" id="dob">
+            <input type="file" name="" id="">
+
+            <div class="btnflex">
+                <button type="button" id="editcontactdetails">Edit</button>
+                <button type="submit" id="savecontactdetails">Save</button>
+            </div>
+            
+        </form>
+      </div>
+    </div>
+<!-- Professional Summary -->
+    <div id="summary" class="section">
+      <h2>Professional Summary</h2>
+      <p>Write 2–4 sentences that summarise who you are, what you do, and what you bring to the table.</p>
+    <form id="summaryform">
+        <div class="feild">
+            <label>Professional Title</label>
+            <input id="professionaltitle" type="text" placeholder="e.g. Full-Stack Engineer · 8 years experience">
+        </div>
+
+        
+
+        <div class="feild">
+            <label>Key Strengths</label>
+            <input id="keyStrengths" type="text" placeholder="Leadership, Problem Solving, Communication">
+        </div>
+
+        <div class="feild">
+            <label>Languages Spoken</label>
+            <input id="languageSpoken" type="text" placeholder="English (Native), Spanish (B2)">
+        </div>
+
+        <div class="feild-full">
+            <label>Summary / Objective Statemen</label>
+            <textarea name="" id="summaryStatement" placeholder="A results-driven professional with X years of experience in..."></textarea>
+        </div>
+        <div class="btnflex">
+             <button type="button" class="summarybtn">edit</button>
+            <button type="submit">Save</button>
+        </div>
+       
+    </form>
+    </div>
+<!-- experience -->
+    <div id="experience" class="section">
+      <h2>Experience</h2>
+
+      <div class="formcontainer firstform">
+        <div class="formHeader" onclick="toggleCard(this)">
+            <div class="heading">
+                <div class="entry-title">Product Designer — Acme Corp</div>
+                <div class="entry-sub">Jan 2021 – Present · San Francisco, CA</div>
+            </div>
+            <div class="entry-actions">
+                <button class="icon-btn del" title="Delete">✕</button>
+                <button class="icon-btn" title="Toggle">▾</button>
+            </div>
+        </div>
+      <form class="form-body first-form">
+        <div class="feild">
+            <label>Job Title</label>
+            <input type="text" placeholder="Job Title" class="jobTitle">
+        </div>
+        <div class="feild">
+            <label>Company/Employer</label>
+            <input type="text" placeholder="Company/Employer" class="employer">
+        </div>
+        <div class="feild">
+            <label>Location</label>
+            <input type="text" placeholder="Location" class="location">
+        </div>
+        <div class="feild">
+            <label>Start Date</label>
+            <input type="month"  class="startDate">
+
+        </div>
+        <div class="feild" >
+            <label>End Date</label>
+            <input type="month" class="endDate">
+
+        </div>
+        <div class="feild">
+            <label>Key Achievement</label>
+            <input type="text" placeholder="e.g. Increased conversion by 18% by redesigning onboarding"  class="keyAchievement">
+        </div>
+        <div class="feild">
+            <label>Employment Type</label>
+            <select class="employmentType">
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>Internship</option>
+            <option>Freelance</option>
+            </select>
+        </div>
+        <div class="feild-full"> 
+            <label>Description / Responsibilities</label>
+            <textarea id="" placeholder="• Led end-to-end design of core product features
+                • Collaborated with engineering to deliver pixel-perfect UI
+                • Increased user retention by 24% through redesign" class="description">
+            </textarea>
+        </div>
+
+        <div class="btnflex">
+            <button type="button" class="firstFormBtn">edit</button>
+        <button type="submit">Save</button>
+        </div>
+      </form>
+
+      </div>
+
+
+    <button id="addmoreexp" class="btn-add-entry">Add another position</button>
+    </div>
+<!-- education -->
+    <div id="education" class="section">
+      <h2>Education</h2>
+        <div class="formcontainer educationFirstform">
+            <div class="formHeader" onclick="toggleCard(this)">
+                <div class="heading">
+                    <div class="entry-title">Product Designer — Acme Corp</div>
+                    <div class="entry-sub">Jan 2021 – Present · San Francisco, CA</div>
+                </div>
+                <div class="entry-actions">
+                    <button class="icon-btn del educDele" title="Delete">✕</button>
+                    <button class="icon-btn" title="Toggle">▾</button>
+                </div>
+            </div>
+            <form class="form-body educationFirstformBody">
+                <div class="feild">
+                    <label>Degree / Certification</label>
+                    <select class="certificationType">
+                    <option>Bachelor's Degree</option>
+                    <option>Master's Degree</option>
+                    <option>PhD / Doctorate</option>
+                    <option>Associate Degree</option>
+                    <option>High School Diploma</option>
+                    <option>Professional Certification</option>
+                    <option>Online Course</option>
+                    <option>Others</option>
+                    </select>
+                </div>
+                <div class="feild">
+                    <label>Field of Study / Major</label>
+                    <input type="text" placeholder="Computer Science" class="study">
+                </div>
+                <div class="feild">
+                    <label>Institution / School</label>
+                    <input type="text" placeholder="MIT" class="institution">
+                </div>
+                <div class="feild">
+                    <label>Location</label>
+                    <input type="text" placeholder="Location" class="location">
+                </div>
+                <div class="feild">
+                    <label>GPA / Grade</label>
+                    <input type="text" placeholder="e.g. 3.9 / 4.0" class="grade">
+                </div>
+                <div class="feild">
+                    <label>Start Year</label>
+                    <input type="number"  class="startYear" value="2016" >
+
+                </div>
+                <div class="feild" >
+                    <label>End Year</label>
+                    <input type="number" class="endYear" value="2020">
+                </div>
+
+                <div class="feild-full"> 
+                    <label>Relevant Coursework / Thesis optional</label>
+                    <textarea  placeholder="Algorithms, ML, Distributed Systems | Thesis: Neural Networks for NLP" class="Thesis">
+                    </textarea>
+                </div>
+
+                <div class="btnflex">
+                    <button type="button" id="editEducation">edit</button>
+                    <button type="submit" id="saveEducation">Save</button>
+                </div>
+            </form>
+        </div>
+
+        <button id="addmoredu" class="btn-add-entry">Add another position</button>
+
+    </div>
+<!-- education end-->
+
+<!-- Honours-->
+
+
+
+    <div id="honors" class="section">
+      <h2>Honors</h2>
+        <div class="formcontainer honorscont">
+            <div class="formHeader" onclick="toggleCard(this)">
+                <div class="heading">
+                    <div class="entry-title">Product Designer — Acme Corp</div>
+                    <div class="entry-sub">Jan 2021 – Present · San Francisco, CA</div>
+                </div>
+                <div class="entry-actions">
+                    <button class="icon-btn honorsdel " title="Delete">✕</button>
+                    <button class="icon-btn" title="Toggle">▾</button>
+                </div>
+            </div>
+            <form class="form-body honorsForm">
+                <div class="feild">
+                    <label>Category</label>
+                        <select class="honorsCategory">
+                        <option>Academic</option>
+                        <option>Professional</option>
+                        <option>Competition</option>
+                        <option>Publication</option>
+                        <option>Scholarship</option>
+                        <option>Volunteer</option>
+                        <option>Other</option>
+                        </select>
+                </div>
+                <div class="feild">
+                    <label>Award / Honor Name</label>
+                    <input type="text" placeholder="Dean's List" class="awards">
+                </div>
+                <div class="feild">
+                    <label>Issuing Organisation</label>
+                    <input type="text" placeholder="MIT" class="organisation">
+                </div>
+             
+                <div class="feild" >
+                    <label>Year</label>
+                    <input type="number" class="honorsYear" value="2020">
+                </div>
+
+                <div class="feild-full"> 
+                    <label>Description</label>
+                    <textarea placeholder="Brief description of what this award recognises and why you received it." class="honorsDesc">
+                    </textarea>
+                </div>
+                <div class="feild" >
+                    <label>Certificate / Link</label>
+                    <input type="url" class="honorscerti" placeholder="https://credential-url.com">
+                </div>
+
+                <div class="btnflex">
+                    <button type="button" class="editHonors">edit</button>
+                    <button type="submit" class="saveHonors">Save</button>
+                </div>
+            </form>
+        </div>
+
+        <button id="addmoreHonors" class="btn-add-entry">Add another position</button>
+
+    </div>
+
+    <div id="skills" class="section">
+      <h2>Skills</h2>
+        <div class="formcontainer skillscont">
+            <div class="formHeader" onclick="toggleCard(this)">
+                <div class="heading">
+                    <div class="entry-title">Product Designer — Acme Corp</div>
+                    <div class="entry-sub">Jan 2021 – Present · San Francisco, CA</div>
+                </div>
+                <div class="entry-actions">
+                    <button class="icon-btn skillsdel " title="Delete">✕</button>
+                    <button class="icon-btn" title="Toggle">▾</button>
+                </div>
+            </div>
+            <form class="form-body skillform">
+                <div class="feild">
+                    <label>Proficiency Level</label>
+                        <select class="proficiency">
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Expert</option>
+                        </select>
+                </div>
+                <div class="feild">
+                    <label>Category Name</label>
+                    <input type="text" placeholder="Technical Skills" class="cate">
+                </div>
+                <div class="feild">
+                    <label>Skills comma-separated</label>
+                    <input type="text" placeholder="Figma, React, TypeScript, CSS" class="skills">
+                </div>
+             
+      
+
+                <div class="btnflex">
+                    <button type="button" class="editSkills">edit</button>
+                    <button type="submit" class="saveSkills">Save</button>
+                </div>
+            </form>
+        </div>
+
+         <button id="addmoreSkills" class="btn-add-entry">Add another position</button>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<script src="index.js"></script>
+</body>
+</html>
