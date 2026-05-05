@@ -35,8 +35,6 @@ Dynamic Form Handling
 Array Methods (map, forEach, split, join)
 Component-like Structure using JS
 Data Binding (Form → Resume Preview)
-📸 Preview
-<img width="750" height="835" alt="image" src="https://github.com/user-attachments/assets/b4fc5258-9551-41b7-978e-79356a454cb1" />
 
 ⚠️ This project is currently under development and actively being improved.
 
